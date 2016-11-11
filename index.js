@@ -18,9 +18,6 @@ var server = http.createServer(function (req, res) {
     exec(entry.cmd, {
         cwd: entry.cwd
     }, function(error, stdout, stderr) {
-        if(error){
-            return internalError(res, error);
-        }
         var msg = buildResult(stdout, stderr);
         return ok(res, msg);
     });
