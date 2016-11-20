@@ -21,7 +21,7 @@ function controller(req, res) {
     exec(entry.cmd + ' 2>&1', {
         cwd: entry.cwd
     }, function(err, stdout) {
-        writeAndLog('STDOUT:');
+        writeAndLog('OUTPUT:');
         writeAndLog(stdout);
         if(config.stack && err){
             writeAndLog('STACK:');
