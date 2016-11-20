@@ -21,6 +21,7 @@ Make a `shellhubrc.json` in current directory:
 {
     "host": "0.0.0.0",
     "port": 8888,
+    "stack": true,
     "scripts": {
         "/hello/world": {
             "cwd": "/Users/harttle/src/shellhub/demo/",
@@ -35,6 +36,17 @@ Then simply run:
 ```bash
 $ shellhub
 ```
+
+## Options
+
+Name | Default | Description
+--- | --- | ---
+`host` | `"localhost"` | The host to bind with
+`port` | `8080` | The port to bind with
+`stack` | `true` | Whether or not print stack when there's an error
+`scripts` | `{}` | Map from pathname to shell entry
+`scripts.cwd` | `undefined` | The work directory for the shell command
+`scripts.cmd` | `undefined` | The shell command to run
 
 ## Q&A
 

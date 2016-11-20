@@ -1,6 +1,6 @@
 {
   "name": "shellhub",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A simple HTTP server to invoke shell scripts, typically used for git hooks. ",
   "main": "src/server.js",
   "scripts": {
@@ -32,8 +32,7 @@
     "istanbul": "^0.4.3",
     "mocha": "^2.4.5",
     "sinon": "^1.17.4",
-    "sinon-chai": "^2.8.0",
-    "mock-fs": "^3.9.0"
+    "sinon-chai": "^2.8.0"
   },
   "dependencies": {
     "commander": "^2.9.0"
