@@ -2,9 +2,13 @@
   "name": "shellhub",
   "version": "0.0.1",
   "description": "A simple HTTP server to invoke shell scripts, typically used for git hooks. ",
-  "main": "index.js",
+  "main": "src/server.js",
   "scripts": {
-    "test": "mocha"
+    "test": "mocha",
+    "start": "node bin/cli.js"
+  },
+  "bin": {
+    "shellhub": "bin/cli.js"
   },
   "repository": {
     "type": "git",
@@ -21,5 +25,17 @@
   "bugs": {
     "url": "https://github.com/harttle/shellhub/issues"
   },
-  "homepage": "https://github.com/harttle/shellhub#readme"
+  "homepage": "https://github.com/harttle/shellhub#readme",
+  "devDependencies": {
+    "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
+    "istanbul": "^0.4.3",
+    "mocha": "^2.4.5",
+    "sinon": "^1.17.4",
+    "sinon-chai": "^2.8.0",
+    "mock-fs": "^3.9.0"
+  },
+  "dependencies": {
+    "commander": "^2.9.0"
+  }
 }
