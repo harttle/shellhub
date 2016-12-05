@@ -3,7 +3,8 @@
 [![NPM version](https://img.shields.io/npm/v/shellhub.svg?style=flat)](https://www.npmjs.org/package/shellhub)
 [![Build Status](https://travis-ci.org/harttle/shellhub.svg?branch=master)](https://travis-ci.org/harttle/shellhub)
 [![Coverage Status](https://img.shields.io/coveralls/harttle/shellhub/master.svg)](https://coveralls.io/github/harttle/shellhub?branch=master)
-[![Dependency manager](https://img.shields.io/david/harttle/shellhub.svg?style=flat)](https://david-dm.org/harttle/shellhub)
+[![Dependency manager](https://david-dm.org/harttle/shellhub/status.svg)](https://david-dm.org/harttle/shellhub)
+
 
 A simple HTTP server to invoke shell scripts, typically used for git hooks.
 
