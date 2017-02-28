@@ -1,54 +1,39 @@
 var http = require('http');
-var exec = require('child_process').exec;
+var spawn = require('child_process').spawn;
 var url = require('url');
 var logger = require('./logger.js');
+var path = require('path');
 
+var log = logger();
 var config;
 
 function controller(req, res) {
-    var log = logger();
-
     var pathname = url.parse(req.url).pathname;
-    writeAndLog('PATH: ' + pathname);
-
     var entry = config.scripts[pathname];
+
     if (!entry) {
-        return res.end('path ' + pathname + ' not registered');
+        var msg = 'path ' + pathname + ' not registered';
+        log(msg);
+        res.statusCode = 404;
+        res.end(msg);
+        return
     }
 
-    writeAndLog('CWD: ' + entry.cwd);
-    writeAndLog('CMD: ' + entry.cmd);
-    exec(entry.cmd + ' 2>&1', {
+    var msg = 'Running "' + entry.cmd + '" in ' + entry.cwd + '\n';
+    msg += 'Output:\n',
+
+    log(msg);
+    res.write(msg);
+
+    var proc = spawn('bash', ['-c', '( ' + entry.cmd + ' ) 2>&1'], {
         cwd: entry.cwd
-    }, function(err, stdout) {
-        writeAndLog('OUTPUT:');
-        writeAndLog(stdout);
-        if(config.stack && err){
-            writeAndLog('STACK:');
-            writeAndLog(err.stack);
-        }
-        res.end();
     });
-    function writeAndLog(str){
-        res.write(str + '\n');
-        log(str);
-    }
+
+    proc.stdout.pipe(res);
+    proc.stdout.pipe(process.stdout);
 }
 
 exports.mkServer = function(cfg) {
-    config = cfg || {};
-    if(config.stack === undefined){
-        config.stack = true;
-    }
-    if(config.scripts === undefined){
-        config.scripts = {};
-    }
-    if(config.host === undefined){
-        config.host = 'localhost';
-    }
-    if(config.port === undefined){
-        config.host = 8080;
-    }
-    
+    config = cfg;
     return http.createServer(controller);
 };

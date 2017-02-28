@@ -1,0 +1,20 @@
+{
+    "host": "0.0.0.0",
+    "port": 3333,
+    "stack": true,
+    "scripts": {
+        "/hello/world": {
+            "cwd": "./",
+            "cmd": "bash hello-world.sh"
+        },
+        "/with/error": {
+            "cwd": "./",
+            "cmd": "echo first line >&2 && echo second line && echo third line >&2"
+        },
+        "/deep/cwd": {
+            "cwd": "foo/bar",
+            "cmd": "echo nothing"
+        }
+    }
+}
+

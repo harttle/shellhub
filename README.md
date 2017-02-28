@@ -46,7 +46,7 @@ Name | Default | Description
 `port` | `8080` | The port to bind with
 `stack` | `true` | Whether or not print stack when there's an error
 `scripts` | `{}` | Map from pathname to shell entry
-`scripts.cwd` | `undefined` | The work directory for the shell command
+`scripts.cwd` | `undefined` | The work directory for the shell command, resolve based on the config file
 `scripts.cmd` | `undefined` | The shell command to run
 
 ## Q&A
