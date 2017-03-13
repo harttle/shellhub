@@ -11,6 +11,7 @@ function controller(req, res) {
     var pathname = url.parse(req.url).pathname;
     var entry = config.scripts[pathname];
 
+    res.setHeader('content-type', 'text/plain')
     if (!entry) {
         var msg = 'path ' + pathname + ' not registered';
         log(msg);

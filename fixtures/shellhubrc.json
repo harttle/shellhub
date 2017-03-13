@@ -14,6 +14,10 @@
         "/deep/cwd": {
             "cwd": "foo/bar",
             "cmd": "echo nothing"
+        },
+        "/spawn": {
+            "cwd": "./",
+            "cmd": "echo spawning child process && sh hello-world.sh"
         }
     }
 }

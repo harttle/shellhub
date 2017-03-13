@@ -1,8 +1,6 @@
-const chai = require("chai");
-const expect = chai.expect;
-const request = require('supertest');
-const server = require('../src/server.js');
-const Config = require('../src/config.js');
+var request = require('supertest');
+var server = require('../src/server.js');
+var Config = require('../src/config.js');
 
 describe('server', function() {
     var config = Config.load('fixtures/shellhubrc.json');
@@ -10,6 +8,13 @@ describe('server', function() {
 
     it('should respond 404 for url not registered', function() {
         return request(app).get('/foo').expect(404);
+    });
+
+    it('should respond with text/plain', function() {
+        return request(app)
+            .get('/hello/world')
+            .expect(200)
+            .expect('content-type', 'text/plain');
     });
 
     it('should respond with stdout', function() {
@@ -24,5 +29,12 @@ describe('server', function() {
             .get('/with/error')
             .expect(200)
             .expect(/first line\nsecond line\nthird line/);
+    });
+
+    it('should capture child outputs', function() {
+        return request(app)
+            .get('/spawn')
+            .expect(200)
+            .expect(/spawning child process\nhello world/);
     });
 });
