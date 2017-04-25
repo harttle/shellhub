@@ -5,8 +5,7 @@
 [![Coverage Status](https://img.shields.io/coveralls/harttle/shellhub/master.svg)](https://coveralls.io/github/harttle/shellhub?branch=master)
 [![Dependency manager](https://david-dm.org/harttle/shellhub/status.svg)](https://david-dm.org/harttle/shellhub)
 
-
-A simple HTTP server to invoke shell scripts, typically used for git hooks.
+An HTTP server to provide streaming ports for shell scripts, typically used for git hooks.
 
 ## Installation
 
@@ -26,17 +25,25 @@ Make a `shellhubrc.json` in current directory:
     "scripts": {
         "/hello/world": {
             "cwd": "/Users/harttle/src/shellhub/demo/",
-            "cmd": "bash hello-world.sh"
+            "cmd": "hello-world.sh"
         }
     }
 }
 ```
 
-Then simply run:
+Run `shellhub` with default `shellhubrc.json` in current directory:
 
 ```bash
 $ shellhub
 ```
+
+Open `http://localhost:8888/hello/world` in your favorite browser, or:
+
+```bash
+curl http://localhost:8888/hello/world
+```
+
+The output of `hello-world.sh` will be streamed to stdout.
 
 ## Options
 
@@ -45,9 +52,9 @@ Name | Default | Description
 `host` | `"localhost"` | The host to bind with
 `port` | `8080` | The port to bind with
 `stack` | `true` | Whether or not print stack when there's an error
-`scripts` | `{}` | Map from pathname to shell entry
+`scripts` | `{}` | Map from pathname to shell entry, the pathname can be arbitrary string
 `scripts.cwd` | `undefined` | The work directory for the shell command, resolve based on the config file
-`scripts.cmd` | `undefined` | The shell command to run
+`scripts.cmd` | `undefined` | The shell command to run, which will be passed to `bash -c`
 
 ## Q&A
 
