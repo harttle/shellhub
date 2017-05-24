@@ -1,6 +1,9 @@
-var request = require('supertest');
-var server = require('../src/server.js');
-var Config = require('../src/config.js');
+const request = require('supertest');
+const server = require('../src/server.js');
+const Config = require('../src/config.js');
+const fs = require('fs');
+const path = require('path');
+const mock = require('mock-fs');
 
 describe('server', function() {
     var config = Config.load('fixtures/shellhubrc.json');
@@ -36,5 +39,17 @@ describe('server', function() {
             .get('/spawn')
             .expect(200)
             .expect(/spawning child process\nhello world/);
+    });
+
+    it('should update on every request', function() {
+        var cfgContent = fs.readFileSync(config.path, {encoding: 'utf-8'});
+        var mockObj = {};
+        mockObj[config.path] = cfgContent.replace('hello-world.sh', 'fuck-world.sh');
+        mock(mockObj);
+        return request(app)
+            .get('/hello/world')
+            .expect(200)
+            .expect(/fuck world/)
+            .then(() => mock.restore());
     });
 });

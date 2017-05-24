@@ -8,6 +8,7 @@ var log = logger();
 var config;
 
 function controller(req, res) {
+    config.reload();
     var pathname = url.parse(req.url).pathname;
     var entry = config.scripts[pathname];
 
