@@ -1,5 +1,7 @@
 const request = require('supertest');
 const server = require('../src/server.js');
+const chai = require('chai')
+const expect = chai.expect
 const Config = require('../src/config.js');
 const fs = require('fs');
 const path = require('path');
@@ -32,6 +34,28 @@ describe('server', function() {
             .get('/with/error')
             .expect(200)
             .expect(/first line\nsecond line\nthird line/);
+    });
+
+    it('should pass query as variables into bash', function() {
+        return request(app)
+            .get('/echo/word?word=WORD')
+            .expect(200)
+            .expect(/before WORD after/);
+    });
+
+    it('should generate loader', function() {
+        var ret = server.loader('echo', {})
+        expect(ret).to.equal('( echo ) 2>&1')
+    });
+
+    it('should generate loader according to query', function() {
+        var ret = server.loader('echo', {foo: 'bar'})
+        expect(ret).to.equal('export foo=bar;( echo ) 2>&1')
+    });
+
+    it('should skip non work characters in query', function() {
+        var ret = server.loader('echo', {foo: '-bar', bar: 'baz'})
+        expect(ret).to.equal('export bar=baz;( echo ) 2>&1')
     });
 
     it('should capture child outputs', function() {

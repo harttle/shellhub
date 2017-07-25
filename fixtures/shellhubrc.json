@@ -7,6 +7,10 @@
             "cwd": "./",
             "cmd": "bash hello-world.sh"
         },
+        "/echo/word": {
+            "cwd": "./",
+            "cmd": "bash echo-word.sh"
+        },
         "/with/error": {
             "cwd": "./",
             "cmd": "echo first line >&2 && echo second line && echo third line >&2"

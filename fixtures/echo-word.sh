@@ -1,0 +1,1 @@
+echo before ${word} after

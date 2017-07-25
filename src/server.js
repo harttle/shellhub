@@ -9,12 +9,12 @@ var config;
 
 function controller(req, res) {
     config.reload();
-    var pathname = url.parse(req.url).pathname;
-    var entry = config.scripts[pathname];
+    var urlObj = url.parse(req.url, true)
+    var entry = config.scripts[urlObj.pathname];
 
     res.setHeader('content-type', 'text/plain')
     if (!entry) {
-        var msg = 'path ' + pathname + ' not registered';
+        var msg = 'path ' + urlObj.pathname + ' not registered';
         log(msg);
         res.statusCode = 404;
         res.end(msg);
@@ -27,12 +27,29 @@ function controller(req, res) {
     log(msg);
     res.write(msg);
 
-    var proc = spawn('bash', ['-c', '( ' + entry.cmd + ' ) 2>&1'], {
+    var loader = exports.loader(entry.cmd, urlObj.query)
+    var proc = spawn('bash', ['-c', loader], {
         cwd: entry.cwd
     });
 
     proc.stdout.pipe(res);
     proc.stdout.pipe(process.stdout);
+}
+
+exports.loader = function(cmd, query){
+    var r = /^\w+$/
+    var vars = Object
+        .keys(query)
+        .map(function(key){
+            var val = query[key];
+            if (r.test(key) && r.test(val)) {
+                return 'export ' + key + '=' + val + ';'
+            } else {
+                return ''
+            }
+        })
+        .join('')
+    return vars + '( ' + cmd + ' ) 2>&1'
 }
 
 exports.mkServer = function(cfg) {
