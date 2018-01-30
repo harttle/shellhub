@@ -37,16 +37,11 @@ function controller(req, res) {
 }
 
 exports.loader = function(cmd, query){
-    var r = /^\w+$/
     var vars = Object
         .keys(query)
         .map(function(key){
             var val = query[key];
-            if (r.test(key) && r.test(val)) {
-                return 'export ' + key + '=' + val + ';'
-            } else {
-                return ''
-            }
+            return 'export ' + key + '=' + val + ';'
         })
         .join('')
     return vars + '( ' + cmd + ' ) 2>&1'
