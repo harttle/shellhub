@@ -21,13 +21,13 @@ function controller(req, res) {
         return
     }
 
-    var msg = 'Running "' + entry.cmd + '" in ' + entry.cwd + '\n';
+    var loader = exports.loader(entry.cmd, urlObj.query)
+    var msg = 'Running "' + loader + '" in ' + entry.cwd + '\n';
     msg += 'Output:\n',
 
     log(msg);
     res.write(msg);
 
-    var loader = exports.loader(entry.cmd, urlObj.query)
     var proc = spawn('bash', ['-c', loader], {
         cwd: entry.cwd
     });
