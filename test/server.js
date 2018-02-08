@@ -55,7 +55,7 @@ describe('server', function() {
 
     it('should skip non work characters in query', function() {
         var ret = server.loader('echo', {foo: '-bar', bar: 'baz'})
-        expect(ret).to.equal('export bar=baz;( echo ) 2>&1')
+        expect(ret).to.equal('export foo=-bar;export bar=baz;( echo ) 2>&1')
     });
 
     it('should capture child outputs', function() {
