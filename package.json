@@ -1,6 +1,6 @@
 {
   "name": "shellhub",
-  "version": "0.3.2",
+  "version": "0.4.0",
   "description": "A simple HTTP server to invoke shell scripts, typically used for git hooks. ",
   "main": "src/server.js",
   "scripts": {
