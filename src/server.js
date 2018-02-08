@@ -49,5 +49,9 @@ exports.loader = function(cmd, query){
 
 exports.mkServer = function(cfg) {
     config = cfg;
-    return http.createServer(controller);
+    var server = http.createServer(controller);
+    if (config.timeout !== undefined) {
+        server.timeout = config.timeout;
+    }
+    return server;
 };
